@@ -1,0 +1,20 @@
+[versions]
+agp = "8.2.2"
+kotlin = "1.9.22"
+composeMultiplatform = "1.6.2"
+composeCompiler = "1.5.8"
+androidx-activityCompose = "1.8.2"
+androidx-coreKtx = "1.12.0"
+androidx-lifecycleRuntimeCompose = "2.6.2"
+
+[libraries]
+androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-coreKtx = { module = "androidx.core:core-ktx", version.ref = "androidx-coreKtx" }
+androidx-lifecycleRuntimeCompose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycleRuntimeCompose" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "composeCompiler" }

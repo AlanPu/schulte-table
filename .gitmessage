@@ -1,0 +1,14 @@
+舒尔特表跨平台应用 - 初始版本
+
+功能特性:
+- ✅ 支持 4×4、5×5、6×6 三种难度
+- ✅ 数字、字母、汉字、颜色四种模式
+- ✅ 精确计时器
+- ✅ 跨平台支持 (Android, iOS, iPad, macOS)
+- ✅ Material Design 3 界面
+- ✅ 响应式设计
+
+技术栈:
+- Jetpack Compose Multiplatform
+- Kotlin
+- Gradle
