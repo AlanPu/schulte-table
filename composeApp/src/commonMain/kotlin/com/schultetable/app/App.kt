@@ -50,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import androidx.compose.material.icons.filled.Star
 
 @Composable
 fun App() {
@@ -71,12 +72,41 @@ fun MainScreen() {
     var useColors by remember { mutableStateOf(true) }
     var showSettings by remember { mutableStateOf(false) }
     var showAbout by remember { mutableStateOf(false) }
-    
+    var showScoreHistory by remember { mutableStateOf(false) }
+
+    val scoreManager = remember { ScoreManagerHolder.get() }
+    var scores by remember { mutableStateOf<List<ScoreRecord>>(emptyList()) }
+
+    fun loadScores() {
+        scores = scoreManager.getScores(gridSize, gameMode, useColors)
+    }
+
+    fun saveScore(elapsedTime: Float) {
+        scoreManager.saveScore(
+            ScoreRecord(
+                elapsedTime = elapsedTime,
+                timestamp = System.currentTimeMillis(),
+                gridSize = gridSize,
+                gameMode = gameMode,
+                useColors = useColors
+            )
+        )
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("舒尔特表") },
                 actions = {
+                    IconButton(onClick = {
+                        loadScores()
+                        showScoreHistory = true
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "成绩记录"
+                        )
+                    }
                     IconButton(onClick = { showAbout = true }) {
                         Icon(
                             imageVector = androidx.compose.material.icons.Icons.Default.Info,
@@ -101,7 +131,8 @@ fun MainScreen() {
             GameView(
                 gridSize = gridSize,
                 gameMode = gameMode,
-                useColors = useColors
+                useColors = useColors,
+                onGameOver = { elapsedTime -> saveScore(elapsedTime) }
             )
         }
         
@@ -125,11 +156,26 @@ fun MainScreen() {
                 onDismiss = { showAbout = false }
             )
         }
+
+        if (showScoreHistory) {
+            ScoreHistoryDialog(
+                scores = scores,
+                gridSize = gridSize,
+                gameMode = gameMode,
+                useColors = useColors,
+                onDismiss = { showScoreHistory = false }
+            )
+        }
     }
 }
 
 @Composable
-fun GameView(gridSize: Int, gameMode: GameMode, useColors: Boolean) {
+fun GameView(
+    gridSize: Int,
+    gameMode: GameMode,
+    useColors: Boolean,
+    onGameOver: (Float) -> Unit = {}
+) {
     var numbers by remember { mutableStateOf(emptyList<Int>()) }
     var currentNumber by remember { mutableStateOf(1) }
     var elapsedTime by remember { mutableStateOf(0f) }
@@ -165,6 +211,12 @@ fun GameView(gridSize: Int, gameMode: GameMode, useColors: Boolean) {
         }
     }
     
+    LaunchedEffect(gameOver) {
+        if (gameOver) {
+            onGameOver(elapsedTime)
+        }
+    }
+
     LaunchedEffect(gridSize, gameMode) {
         if (isRunning) {
             startNewGame()
