@@ -68,7 +68,7 @@ fun App() {
 fun MainScreen() {
     var gridSize by remember { mutableStateOf(5) }
     var gameMode by remember { mutableStateOf(GameMode.Numbers) }
-    var useColors by remember { mutableStateOf(false) }
+    var useColors by remember { mutableStateOf(true) }
     var showSettings by remember { mutableStateOf(false) }
     var showAbout by remember { mutableStateOf(false) }
     
