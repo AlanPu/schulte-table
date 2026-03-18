@@ -33,13 +33,13 @@ fun ScoreHistoryDialog(
     useColors: Boolean,
     onDismiss: () -> Unit
 ) {
-    val modeDescription = "${gridSize}×${gridSize} ${gameMode.displayName} ${if (useColors) "彩色" else "单色"}"
+    val modeDescription = "${gridSize}×${gridSize} ${gameMode.displayName} ${if (useColors) Strings.COLORFUL else Strings.MONOCHROME}"
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "最佳成绩",
+                text = Strings.SCORE_HISTORY,
                 fontWeight = FontWeight.Bold
             )
         },
@@ -56,7 +56,7 @@ fun ScoreHistoryDialog(
 
                 if (scores.isEmpty()) {
                     Text(
-                        text = "暂无记录",
+                        text = Strings.NO_SCORES,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(vertical = 24.dp)
@@ -75,19 +75,19 @@ fun ScoreHistoryDialog(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(
-                                    text = "排名",
+                                    text = Strings.RANK,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 14.sp,
                                     modifier = Modifier.weight(1f)
                                 )
                                 Text(
-                                    text = "用时",
+                                    text = Strings.TIME,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 14.sp,
                                     modifier = Modifier.weight(1f)
                                 )
                                 Text(
-                                    text = "日期",
+                                    text = Strings.DATE,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 14.sp,
                                     modifier = Modifier.weight(2f)
@@ -108,7 +108,7 @@ fun ScoreHistoryDialog(
         },
         confirmButton = {
             Button(onClick = onDismiss) {
-                Text("关闭")
+                Text(Strings.CLOSE)
             }
         }
     )

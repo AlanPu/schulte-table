@@ -96,7 +96,7 @@ fun MainScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("舒尔特表") },
+                title = { Text(Strings.APP_TITLE) },
                 actions = {
                     IconButton(onClick = {
                         loadScores()
@@ -104,19 +104,19 @@ fun MainScreen() {
                     }) {
                         Icon(
                             imageVector = Icons.Default.Star,
-                            contentDescription = "成绩记录"
+                            contentDescription = Strings.SCORE_RECORD
                         )
                     }
                     IconButton(onClick = { showAbout = true }) {
                         Icon(
                             imageVector = androidx.compose.material.icons.Icons.Default.Info,
-                            contentDescription = "关于"
+                            contentDescription = Strings.ABOUT
                         )
                     }
                     IconButton(onClick = { showSettings = true }) {
                         Icon(
                             imageVector = androidx.compose.material.icons.Icons.Default.Settings,
-                            contentDescription = "设置"
+                            contentDescription = Strings.SETTINGS
                         )
                     }
                 }
@@ -246,13 +246,13 @@ fun GameView(
         
         // 当前数字提示
         Text(
-            text = "当前：${getContent(currentNumber, gameMode)}",
+            text = Strings.CURRENT.format(getContent(currentNumber, gameMode)),
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold
         )
-        
+
         Text(
-            text = "目标：${getContent(gridSize * gridSize, gameMode)}",
+            text = Strings.TARGET.format(getContent(gridSize * gridSize, gameMode)),
             fontSize = 14.sp,
             color = Color.Gray
         )
@@ -311,18 +311,18 @@ fun GameView(
             // 暂停/继续按钮（游戏进行中显示）
             if (isRunning && !gameOver) {
                 Button(
-                    onClick = { togglePause() },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(if (isPaused) "继续" else "暂停")
-                }
-                
-                Button(
-                    onClick = { startNewGame() },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("重新开始")
-                }
+                        onClick = { togglePause() },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(if (isPaused) Strings.RESUME else Strings.PAUSE)
+                    }
+
+                    Button(
+                        onClick = { startNewGame() },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(Strings.RESTART)
+                    }
             }
         }
         
@@ -331,12 +331,12 @@ fun GameView(
             Spacer(modifier = Modifier.height(16.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "完成！",
+                    text = Strings.GAME_OVER,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "用时：%.2f 秒".format(elapsedTime),
+                    text = Strings.TIME_USED.format(elapsedTime),
                     fontSize = 18.sp,
                     color = Color.Green
                 )
@@ -345,7 +345,7 @@ fun GameView(
                     onClick = { startNewGame() },
                     modifier = Modifier.padding(horizontal = 32.dp)
                 ) {
-                    Text("再来一局")
+                    Text(Strings.PLAY_AGAIN)
                 }
             }
         } else if (!isRunning) {
@@ -353,12 +353,12 @@ fun GameView(
                 onClick = { startNewGame() },
                 modifier = Modifier.padding(horizontal = 32.dp)
             ) {
-                Text("开始游戏")
+                Text(Strings.START_GAME)
             }
         } else if (isPaused) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "游戏已暂停",
+                text = Strings.GAME_PAUSED,
                 fontSize = 20.sp,
                 color = Color.Gray,
                 fontWeight = FontWeight.Medium
@@ -445,7 +445,7 @@ fun TimerDisplay(elapsedTime: Float, isRunning: Boolean) {
             .padding(16.dp)
     ) {
         Text(
-            text = if (isRunning) "计时中" else "准备",
+            text = if (isRunning) Strings.TIMING else Strings.READY,
             fontSize = 12.sp,
             color = Color.Gray
         )
@@ -472,10 +472,10 @@ fun SettingsDialog(
     
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("设置") },
+        title = { Text(Strings.SETTINGS) },
         text = {
             Column {
-                Text("难度选择")
+                Text(Strings.DIFFICULTY)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -488,10 +488,10 @@ fun SettingsDialog(
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
-                Text("内容模式")
+
+                Text(Strings.CONTENT_MODE)
                 Row {
                     GameMode.values().forEach { mode ->
                         FilterChip(
@@ -501,15 +501,15 @@ fun SettingsDialog(
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
-                Text("格子样式")
+
+                Text(Strings.CELL_STYLE)
                 Row {
                     FilterChip(
                         selected = selectedUseColors,
                         onClick = { selectedUseColors = !selectedUseColors },
-                        label = { Text(if (selectedUseColors) "彩色" else "单色") },
+                        label = { Text(if (selectedUseColors) Strings.COLORFUL else Strings.MONOCHROME) },
                         leadingIcon = {
                             if (selectedUseColors) {
                                 Icon(
@@ -527,12 +527,12 @@ fun SettingsDialog(
             Button(
                 onClick = { onConfirm(selectedGridSize, selectedGameMode, selectedUseColors) }
             ) {
-                Text("确定")
+                Text(Strings.CONFIRM)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("取消")
+                Text(Strings.CANCEL)
             }
         }
     )
@@ -605,12 +605,11 @@ fun AboutDialog(onDismiss: () -> Unit) {
         },
         title = {
             Text(
-                text = "关于舒尔特表",
+                text = Strings.ABOUT_SCHULTE_TABLE,
                 fontWeight = FontWeight.Bold
             )
         },
         text = {
-            // 使用垂直滚动布局
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = androidx.compose.ui.Modifier
@@ -618,36 +617,30 @@ fun AboutDialog(onDismiss: () -> Unit) {
                     .heightIn(max = 400.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-                // 简介
                 Text(
-                    text = "舒尔特表是由德国心理学家瓦尔特·舒尔特设计的经典注意力训练与评估工具，通过在随机排列的字符网格中按序快速查找来锻炼视觉搜索能力、注意力集中和处理速度。",
+                    text = Strings.INTRO,
                     fontSize = 14.sp
                 )
-                
-                // 训练方法
+
                 Text(
-                    text = "训练方法：",
+                    text = Strings.TRAINING_METHOD,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp
                 )
                 Text(
-                    text = "• 从第一个字符开始，按顺序找到所有字符\n" +
-                           "• 尽可能快速完成，但不要牺牲准确性\n" +
-                           "• 每天练习 5-10 分钟，坚持一段时间后会看到明显进步",
+                    text = Strings.TRAINING_TIPS,
                     fontSize = 14.sp,
                     lineHeight = 20.sp
                 )
-                
-                // 评分标准
+
                 Text(
-                    text = "评分标准：",
+                    text = Strings.SCORING_STANDARD,
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp
                 )
-                
-                // 5×5 标准
+
                 Text(
-                    text = "5×5 网格：",
+                    text = Strings.GRID_5X5,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp
                 )
@@ -656,24 +649,23 @@ fun AboutDialog(onDismiss: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = "🥇 优秀：< 20 秒",
+                        text = Strings.EXCELLENT_5X5,
                         fontSize = 13.sp,
                         color = Color(0xFFFFD700)
                     )
                     Text(
-                        text = "🥈 良好：< 30 秒",
+                        text = Strings.GOOD_5X5,
                         fontSize = 13.sp,
                         color = Color(0xFFC0C0C0)
                     )
                     Text(
-                        text = "🥉 一般：< 40 秒",
+                        text = Strings.OK_5X5,
                         fontSize = 13.sp
                     )
                 }
-                
-                // 4×4 标准
+
                 Text(
-                    text = "4×4 网格：",
+                    text = Strings.GRID_4X4,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp
                 )
@@ -682,24 +674,23 @@ fun AboutDialog(onDismiss: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = "🥇 优秀：< 10 秒",
+                        text = Strings.EXCELLENT_4X4,
                         fontSize = 13.sp,
                         color = Color(0xFFFFD700)
                     )
                     Text(
-                        text = "🥈 良好：< 15 秒",
+                        text = Strings.GOOD_4X4,
                         fontSize = 13.sp,
                         color = Color(0xFFC0C0C0)
                     )
                     Text(
-                        text = "🥉 一般：< 20 秒",
+                        text = Strings.OK_4X4,
                         fontSize = 13.sp
                     )
                 }
-                
-                // 6×6 标准
+
                 Text(
-                    text = "6×6 网格：",
+                    text = Strings.GRID_6X6,
                     fontWeight = FontWeight.Medium,
                     fontSize = 14.sp
                 )
@@ -708,17 +699,17 @@ fun AboutDialog(onDismiss: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = "🥇 优秀：< 35 秒",
+                        text = Strings.EXCELLENT_6X6,
                         fontSize = 13.sp,
                         color = Color(0xFFFFD700)
                     )
                     Text(
-                        text = "🥈 良好：< 50 秒",
+                        text = Strings.GOOD_6X6,
                         fontSize = 13.sp,
                         color = Color(0xFFC0C0C0)
                     )
                     Text(
-                        text = "🥉 一般：< 65 秒",
+                        text = Strings.OK_6X6,
                         fontSize = 13.sp
                     )
                 }
@@ -728,7 +719,7 @@ fun AboutDialog(onDismiss: () -> Unit) {
             Button(
                 onClick = onDismiss
             ) {
-                Text("知道了")
+                Text(Strings.GOT_IT)
             }
         }
     )
