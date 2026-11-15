@@ -40,9 +40,14 @@
 
 ### iOS 版
 
-1. 在 Xcode 中打开 `iosApp/iosApp.xcodeproj`
-2. 选择目标设备或模拟器
-3. 点击运行按钮
+⚠️ 当前仓库不含可用的 Xcode 工程（`composeApp` 未配置 iOS target）。
+在 iPad / iPhone 上请使用 `web/` 下的 PWA 版本：
+
+```bash
+cd web && python3 -m http.server 8080 --directory site
+```
+
+浏览器打开 `http://localhost:8080`，Safari 里「分享 → 添加到主屏幕」即可。
 
 ## 3. 构建发布版本
 

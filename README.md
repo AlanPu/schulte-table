@@ -45,10 +45,9 @@ SchulteTable/
 │   │   │           └── App.kt    # 主应用逻辑
 │   │   ├── androidMain/          # Android 特定代码
 │   │   ├── desktopMain/          # 桌面端特定代码
-│   │   └── iosMain/              # iOS 特定代码
+│   │   └── iosMain/              # iOS 入口（尚未接入 Gradle target）
 │   └── build.gradle.kts
-├── iosApp/                        # iOS 应用包装器
-│   └── iosApp/
+├── web/                           # PWA 版本（可装到 iPad / Android 桌面）
 └── build.gradle.kts               # 根构建配置
 ```
 
@@ -72,7 +71,16 @@ SchulteTable/
 ```
 
 ### iOS
-在 Xcode 中打开 `iosApp/iosApp.xcodeproj` 并运行
+当前仓库**没有可用的 Xcode 工程**：`composeApp` 未配置 iOS target，且 `commonMain`
+里用到了 `java.io.File` / `SimpleDateFormat` 等 JVM 专有 API。
+要在 iPad / iPhone 上使用，请走 `web/` 下的 PWA 版本：
+
+```bash
+cd web && python3 -m http.server 8080 --directory site
+# 浏览器打开 http://localhost:8080
+```
+
+部署到自有服务器（含群晖 Docker）见 [web/DEPLOY-SYNOLOGY.md](web/DEPLOY-SYNOLOGY.md)。
 
 ## 使用说明
 

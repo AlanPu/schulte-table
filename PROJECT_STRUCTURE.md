@@ -30,10 +30,12 @@ SchulteTable/
 │   │
 │   └── build.gradle.kts                # 模块构建配置
 │
-├── 📁 iosApp/                          # iOS 应用包装器
-│   └── 📁 iosApp/
-│       ├── Info.plist                  # iOS 配置文件
-│       └── iOSApp.swift                # iOS 应用入口
+├── 📁 web/                             # PWA 版本（纯静态 + Docker 部署）
+│   ├── 📁 site/                        # 站点文件（index/app/styles/sw/manifest/icons）
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── nginx.conf
+│   └── DEPLOY-SYNOLOGY.md              # 群晖部署与 https 配置说明
 │
 ├── 📁 gradle/
 │   ├── 📁 wrapper/

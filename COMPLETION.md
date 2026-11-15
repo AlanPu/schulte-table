@@ -55,7 +55,7 @@ composeApp/src/
 ├── gradle/libs.versions.toml     - 版本目录
 ├── gradle.properties             - Gradle 属性
 ├── composeApp/build.gradle.kts   - 模块构建配置
-└── iosApp/iosApp/Info.plist      - iOS 配置
+└── web/                          - PWA 版本（可装到 iPad，含 Docker 部署）
 ```
 
 ### 文档
@@ -81,8 +81,8 @@ cd SchulteTable
 ```
 
 ### iOS
-1. 打开 `iosApp/iosApp.xcodeproj`
-2. 在 Xcode 中运行
+⚠️ 原生 iOS 工程不在本仓库内（`composeApp` 未配置 iOS target）。
+iPad / iPhone 请使用 `web/` 的 PWA 版本：浏览器打开站点后「分享 → 添加到主屏幕」。
 
 ## 🎮 使用说明
 

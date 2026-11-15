@@ -107,16 +107,12 @@ adb shell am start -n com.schultetable.app/.MainActivity
 
 ### iOS 版
 
-#### 使用 Xcode
-1. 打开 `iosApp/iosApp.xcodeproj`
-2. 选择目标设备或模拟器
-3. 点击运行按钮
+⚠️ 当前仓库不含可用的 Xcode 工程：`composeApp/build.gradle.kts` 没有配置
+`iosArm64` / `iosSimulatorArm64` target，`commonMain` 里还用了 `java.io.File`、
+`SimpleDateFormat`、`System.currentTimeMillis()` 等 JVM 专有 API，加 target 后需要先做
+expect/actual 改造。原 `iosApp/` 目录（无 `.xcodeproj`，Swift 入口与 Info.plist 冲突）已移除。
 
-#### 命令行 (需要 fastlane)
-```bash
-cd iosApp
-xcodebuild -project iosApp.xcodeproj -scheme iosApp
-```
+要在 iPad / iPhone 上使用，走 `web/` 的 PWA 版本，见 [web/DEPLOY-SYNOLOGY.md](web/DEPLOY-SYNOLOGY.md)。
 
 ## 调试技巧
 
@@ -286,11 +282,9 @@ test(game): 添加游戏逻辑测试
 **错误**: `No such module 'ComposeApp'`
 
 **解决方案**:
-```bash
-# 在 iOS 项目中
-cd iosApp
-pod install
-```
+iOS 工程已从本仓库移除（未接入 Gradle target），不会再遇到该问题。
+若日后自行新建 Xcode 工程，需先用 `./gradlew :composeApp:embedAndSignAppleFrameworkForXcode`
+产出 framework，并在 Xcode 的 Build Phases 里配好该脚本。
 
 ### 问题 4: 桌面应用窗口不显示
 
