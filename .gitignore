@@ -69,5 +69,7 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# 打包产物（PWA 的 Docker 部署包，可随时用 web/ 重新打包）
+# 打包产物（可用 web/ 重新生成，不入库）
 schulte-table-docker.tar.gz
+schulte-table-docker.zip
+schulte-table-*-amd64.tar
