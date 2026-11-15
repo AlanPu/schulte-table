@@ -1,0 +1,8 @@
+# 只上传站点和配置，镜像构建上下文尽量小
+site/icons/generate_icons.py
+tools/
+*.md
+*.tar.gz
+docker-compose.build.yml
+.dockerignore
+.git
