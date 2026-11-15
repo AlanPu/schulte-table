@@ -44,10 +44,10 @@
 在 iPad / iPhone 上请使用 `web/` 下的 PWA 版本：
 
 ```bash
-cd web && python3 -m http.server 8080 --directory site
+cd web && python3 -m http.server 14174 --directory site
 ```
 
-浏览器打开 `http://localhost:8080`，Safari 里「分享 → 添加到主屏幕」即可。
+浏览器打开 `http://localhost:14174`，Safari 里「分享 → 添加到主屏幕」即可。
 
 ## 3. 构建发布版本
 

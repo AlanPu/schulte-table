@@ -29,9 +29,9 @@ Safari 只在安全上下文（https 或 localhost）才允许注册 Service Wor
 2. Container Manager → **项目** → **新增**
 3. 项目名称填 `schulte-table`，路径选 `/docker/schulte-table`
 4. 来源选「**使用现有的 docker-compose.yml**」，下一步，启动
-5. 浏览器打开 `http://NAS的IP:8080`，能看到「舒尔特表 v1.1.0」就通了
+5. 浏览器打开 `http://NAS的IP:14174`，能看到「舒尔特表 v1.1.0」就通了
 
-> 端口冲突的话（群晖有些套件占 8080），把 `docker-compose.yml` 里的 `"8080:80"` 改成 `"18080:80"`，后续访问端口同步改。
+> 14174 若被占用，把 `docker-compose.yml` 里的 `"14174:80"` 换成别的宿主端口（右边 `80` 是容器内 nginx，别动），后续访问地址同步改。
 
 ---
 
@@ -50,7 +50,7 @@ Safari 只在安全上下文（https 或 localhost）才允许注册 Service Wor
 | 来源 端口 | 443 |
 | 目的地 协议 | HTTP |
 | 目的地 主机名 | `localhost` |
-| 目的地 端口 | 8080 |
+| 目的地 端口 | 14174 |
 
 **2. 证书**
 
@@ -66,13 +66,13 @@ Safari 只在安全上下文（https 或 localhost）才允许注册 Service Wor
 1. 域名托管到 Cloudflare
 2. 在 Container Manager 里再加一个 `cloudflare/cloudflared` 容器，命令：
    `tunnel --no-autoupdate run --token <你的 Tunnel Token>`
-3. Cloudflare Zero Trust 里建 Tunnel，Public Hostname 指向 `http://群晖内网IP:8080`
+3. Cloudflare Zero Trust 里建 Tunnel，Public Hostname 指向 `http://群晖内网IP:14174`
 
 得到的 `https://schulte.你的域名.com` 就是带证书的正式地址。
 
 ### 情况 C：只在内网用
 
-那就只能用 `http://NAS的IP:8080`。**能玩，但装出来没有离线能力**，属于网页而不是应用。想离线必须走 A 或 B。
+那就只能用 `http://NAS的IP:14174`。**能玩，但装出来没有离线能力**，属于网页而不是应用。想离线必须走 A 或 B。
 
 ---
 
@@ -105,7 +105,7 @@ Safari 只在安全上下文（https 或 localhost）才允许注册 Service Wor
 
 ```bash
 docker build -t schulte-table:1.1.0 .
-docker run -d -p 8080:80 --name schulte-table schulte-table:1.1.0
+docker run -d -p 14174:80 --name schulte-table schulte-table:1.1.0
 ```
 
 或在本目录执行：

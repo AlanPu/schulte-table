@@ -1,7 +1,7 @@
 # 舒尔特表 PWA — 镜像构建（可选，用于分发或没装挂载的场景）
 #
 #   docker build -t schulte-table:1.1.0 .
-#   docker run -d -p 8080:80 --name schulte-table schulte-table:1.1.0
+#   docker run -d -p 14174:80 --name schulte-table schulte-table:1.1.0
 #
 # 群晖上更推荐用 docker-compose.yml 的挂载方式（改文件免重建镜像）。
 

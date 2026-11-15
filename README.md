@@ -76,8 +76,8 @@ SchulteTable/
 要在 iPad / iPhone 上使用，请走 `web/` 下的 PWA 版本：
 
 ```bash
-cd web && python3 -m http.server 8080 --directory site
-# 浏览器打开 http://localhost:8080
+cd web && python3 -m http.server 14174 --directory site
+# 浏览器打开 http://localhost:14174
 ```
 
 部署到自有服务器（含群晖 Docker）见 [web/DEPLOY-SYNOLOGY.md](web/DEPLOY-SYNOLOGY.md)。
